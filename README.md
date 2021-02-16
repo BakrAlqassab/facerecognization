@@ -1,6 +1,6 @@
 # FaceRecoganation
 
-The project will contain html,css,js,React as frontend
+The project will be developing by html,css,React as frontend
 
 Node.js(Express) and postgreSQL as backend
 
