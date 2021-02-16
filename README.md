@@ -1,6 +1,10 @@
 # FaceRecoganation
 
-to use the website:
+The project will contain html,css,js,React as frontend
+
+Node.js(Express) and postgreSQL as backend
+
+To use the App :
 
 1 - clone the repo
 
