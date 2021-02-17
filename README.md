@@ -15,7 +15,7 @@ To use the App :
 
 used packages : 
 
-      [React Particles](https://www.npmjs.com/package/react-particles-js)
+[React Particles](https://www.npmjs.com/package/react-particles-js)
 
-      [React Tilt]( https://www.npmjs.com/package/react-tilt)
+[React Tilt]( https://www.npmjs.com/package/react-tilt)
 
