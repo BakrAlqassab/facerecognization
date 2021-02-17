@@ -6,7 +6,8 @@ Node.js(Express) and postgreSQL as backend
 
 To use the App :
 
-1 - clone the repo
+1 - Clone this repo
+
 
 2- npm install
 
@@ -14,7 +15,7 @@ To use the App :
 
 used packages : 
 
-[React Particles](https://www.npmjs.com/package/react-particles-js)
+      [React Particles](https://www.npmjs.com/package/react-particles-js)
 
-[React Tilt]( https://www.npmjs.com/package/react-tilt)
+      [React Tilt]( https://www.npmjs.com/package/react-tilt)
 
