@@ -6,7 +6,8 @@ Node.js(Express) and postgreSQL as backend
 
 To use the App :
 
-1 - clone the repo
+1 - Clone this repo
+
 
 2- npm install
 
