@@ -10,7 +10,7 @@ import Particles from "react-particles-js";
 import Clarifai from "clarifai";
 
 const app = new Clarifai.App({
-  apiKey: "a25e5a0341574b548cf187236a5592c4",
+  apiKey: "INSERT YOUR API KEY HERE",
 });
 const particlesOption = {
   particles: {
@@ -71,8 +71,30 @@ const particlesOption = {
 function App() {
   const [input, setInput] = useState(0);
   const [imageURL, setImageURL] = useState("");
+  const [box, setBox] = useState({});
+
+  const calculateFaceLocation = (data) => {
+    const clarifaiFace =
+      data.outputs[0].data.regions[0].region_info.bounding_box;
+
+    const image = document.getElementById("inputimage");
+    const width = Number(image.width);
+    const height = Number(image.height);
+    console.log(width, height);
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    };
+  };
+  const displayFaceBox = (boxD) => {
+   
+    setBox(boxD);
+     console.log(box);
+  };
   const onInputChange = (e) => {
-    setInput(e.target.value)
+    setInput(e.target.value);
     console.log(e.target.value);
   };
 
@@ -80,25 +102,27 @@ function App() {
     setImageURL(input);
     app.models
       .predict(
+        // models:
+
+        // https://github.com/Clarifai/clarifai-javascript/blob/master/src/index.js
+
         // determined the model type : like
 
         // detecting Colors recognation
         // Clarifai.COLOR_MODEL,
 
-        // detecting Face recognation 
-          Clarifai.FACE_DETECT_MODEL,
-       input
+        // detecting Face recognation
+        Clarifai.FACE_DETECT_MODEL,
+
+        input
       )
-      .then(
-        function (response) {
-          console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-        },
-        function (error) {}
-      );
+      .then((response) => displayFaceBox(calculateFaceLocation(response)))
+      .catch((err) => console.log("Error", err));
   };
 
   return (
     <div className="App">
+    
       <Particles className="particles" params={particlesOption} />
       <Navigation />
       <Logo />
@@ -107,7 +131,7 @@ function App() {
         onInputChange={onInputChange}
         onButtonClick={onButtonClick}
       />
-      <FaceRecognation imageURL={imageURL} />
+      <FaceRecognation box = {box} imageURL={imageURL} />
     </div>
   );
 }
