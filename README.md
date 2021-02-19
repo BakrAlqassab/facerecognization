@@ -19,3 +19,5 @@ used packages :
 
 [React Tilt]( https://www.npmjs.com/package/react-tilt)
 
+4- To use the project need first to have Clarifai API KEY [Clarifai](https://www.clarifai.com/) and insert it in [app.js](https://github.com/BakrAlqassab/facerecognization/blob/master/src/App.js)
+
