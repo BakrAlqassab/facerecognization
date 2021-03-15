@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
+import Register from "./components/Register/Register";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import FaceRecognation from "./components/FaceRecognation/FaceRecognation";
@@ -75,6 +76,7 @@ function App() {
   const [imageURL, setImageURL] = useState("");
   const [box, setBox] = useState({});
   const [route, setRoute] = useState("_signin");
+  const [isSignedIn, setisSignedIn] = useState(false);
 
   const calculateFaceLocation = (data) => {
     const clarifaiFace =
@@ -123,17 +125,19 @@ function App() {
   };
 
   const onRoutechange = (route) => {
-
+    if (route === "signout") {
+      setisSignedIn(false);
+    } else if (route === "home") {
+      setisSignedIn(true);
+    }
     setRoute(route);
   };
 
   return (
     <div className="App">
       <Particles className="particles" params={particlesOption} />
-      <Navigation onRouteChange={onRoutechange} />
-      {route === "_signin" ? (
-        <Signin onRouteChange={onRoutechange} />
-      ) : (
+      <Navigation onRouteChange={onRoutechange} isSignedIn={isSignedIn} />
+      {route === "home" ? (
         <div>
           {" "}
           <Logo />
@@ -144,6 +148,10 @@ function App() {
           />
           <FaceRecognation box={box} imageURL={imageURL} />
         </div>
+      ) : route === "_signin" ||  route === "signout"  ? (
+        <Signin onRouteChange={onRoutechange} />
+      ) : (
+        <Register onRouteChange={onRoutechange} />
       )}
     </div>
   );
