@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation/Navigation";
+import Signin from "./components/Signin/Signin";
 import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import FaceRecognation from "./components/FaceRecognation/FaceRecognation";
@@ -10,7 +11,8 @@ import Particles from "react-particles-js";
 import Clarifai from "clarifai";
 
 const app = new Clarifai.App({
-  apiKey: "INSERT YOUR API KEY HERE",
+  // apiKey: "INSERT YOUR API KEY HERE",
+  apiKey: "a25e5a0341574b548cf187236a5592c4",
 });
 const particlesOption = {
   particles: {
@@ -72,6 +74,7 @@ function App() {
   const [input, setInput] = useState(0);
   const [imageURL, setImageURL] = useState("");
   const [box, setBox] = useState({});
+  const [route, setRoute] = useState("_signin");
 
   const calculateFaceLocation = (data) => {
     const clarifaiFace =
@@ -84,14 +87,13 @@ function App() {
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
+      rightCol: width - clarifaiFace.right_col * width,
+      bottomRow: height - clarifaiFace.bottom_row * height,
     };
   };
   const displayFaceBox = (boxD) => {
-   
     setBox(boxD);
-     console.log(box);
+    console.log(box);
   };
   const onInputChange = (e) => {
     setInput(e.target.value);
@@ -120,18 +122,29 @@ function App() {
       .catch((err) => console.log("Error", err));
   };
 
+  const onRoutechange = (route) => {
+
+    setRoute(route);
+  };
+
   return (
     <div className="App">
-    
       <Particles className="particles" params={particlesOption} />
-      <Navigation />
-      <Logo />
-      <Rank />
-      <ImageLinkForm
-        onInputChange={onInputChange}
-        onButtonClick={onButtonClick}
-      />
-      <FaceRecognation box = {box} imageURL={imageURL} />
+      <Navigation onRouteChange={onRoutechange} />
+      {route === "_signin" ? (
+        <Signin onRouteChange={onRoutechange} />
+      ) : (
+        <div>
+          {" "}
+          <Logo />
+          <Rank />
+          <ImageLinkForm
+            onInputChange={onInputChange}
+            onButtonClick={onButtonClick}
+          />
+          <FaceRecognation box={box} imageURL={imageURL} />
+        </div>
+      )}
     </div>
   );
 }
